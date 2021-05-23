@@ -29,7 +29,7 @@ start
 IIFE   
 end    
 Timeout
-function setTimeout 指定0毫秒後執行 console.log("Timeout")單獨執行  所以在  end 後
+console.log("Timeout")被丟到webapis 等stack執行完後才執行
 # (3) 請問下列程式執行的結果為何？為什麼？
 
 const bar = () => console.log("bar");
@@ -61,4 +61,7 @@ const foo = () => {
 foo();
 顯示 foo  baz bar
 回調函式 
-執行const foo  顯示  foo  baz setTimeout(bar,0)(在function執行完0秒後執行)  
+執行const foo  顯示  foo  baz bar     
+stack執行完後  執行webapis內的 setTimeout(bar,0) 
+
+
