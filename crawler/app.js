@@ -10,6 +10,9 @@ const axios = require("axios");
 // TODO: 從 stock.txt 讀股票代碼進來
 // filesystem
 // npm i fs ??? -> 不用
+
+
+
 const fs = require("fs");
 
 fs.readFile("stock.txt", "utf8", (err, data) => {
