@@ -7,6 +7,7 @@
 
 // console.log("fib(10) = " + fibonacci(-1)); // 55
 // console.log("counter: " + counter); // 177
+let counter=0;
 function fibonacci (num) {
     var n1 = 1,
         n2 = 1,
@@ -15,7 +16,9 @@ function fibonacci (num) {
         n = n1 + n2;
         n1 = n2;
         n2 = n;
+        counter++;
     }
     return n ;
 }
 console.log("fib(10) = " +fibonacci(10))
+console.log("countertimes:"+counter)
