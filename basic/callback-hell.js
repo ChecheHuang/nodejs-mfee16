@@ -39,3 +39,10 @@ doWork("刷牙", 2000, function (err, result) {
 //     }
 //     console.log(result);
 //   });
+
+
+let doWork =function(job,timer,cb){
+    setTimeout(()=>{
+        callback(null,`完成工作 ${job}`);
+    },timer);
+}
