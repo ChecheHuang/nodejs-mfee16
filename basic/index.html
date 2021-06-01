@@ -23,9 +23,6 @@
     asyncBtn.addEventListener("click",function(){
         var xhr= new XMLHttpRequest();
         xhr.open("GET","http://34.217.120.25:3000",true);
-        xhr.addEventListener('load',function(){
-          // message.innerText = `非同步請求 load ${this.responseText}`;
-        })
         xhr.onload = function(){
             message.innerText = `非同步請求 load ${this.responseText}`;
         };
