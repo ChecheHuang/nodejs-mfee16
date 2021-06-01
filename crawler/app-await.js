@@ -18,7 +18,7 @@ function readFilePromise() {
 async function crawler(){
     try{
         let stockCode = await readFilePromise();
-    let response = await axios.get("https://www.twse.com.tw/exchangeReport/STOCK_DAY", {
+        let response = await axios.get("https://www.twse.com.tw/exchangeReport/STOCK_DAY", {
         params: {
           response: "json",
           date: moment().format("YYYYMMDD"),
