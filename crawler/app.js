@@ -1,29 +1,54 @@
-// https://www.twse.com.tw/exchangeReport/STOCK_DAY
-// ?response=json
-// &date=20210523
-// &stockNo=2610
-
 const axios = require("axios");
 const fs = require("fs");
+const moment = require("moment");
+const mysql = require('mysql');
+const Promise = require("bluebird");
 
-fs.readFile("stock.txt", "utf8", (err, data) => {
-  if (err) {
-    return console.error("讀檔錯誤", err);
-  }
-  console.log(`讀到的 stock code: ${data}`);
-  
-  axios
-    .get("https://www.twse.com.tw/exchangeReport/STOCK_DAY", {
-      params: {
-        response: "json",
-        date: "20210523",
-        stockNo: data,
-      },
-    })
-    .then(function (response) {
-      if (response.data.stat === "OK") {
-        console.log(response.data.date);
-        console.log(response.data.title);
-      }
-    });
+let connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '1234',
+  database: 'stock',
 });
+connection = Promise.promisifyAll(connection);
+const readFileBlue = Promise.promisify(fs.readFile);
+
+(async function () {
+  try {
+    await connection.connectAsync();
+    let stockCode = await readFileBlue("stock.txt", "utf-8");
+    console.log("stockCode:", stockCode);
+
+    let stock = await connection.queryAsync(`SELECT stock_id FROM stock WHERE stock_id = ${stockCode}`);
+    if (stock.length == 0) {
+      console.log("Start to query")
+      let response = await axios.get(
+        `https://www.twse.com.tw/zh/api/codeQuery?query=${stockCode}`
+      );
+      let answer = response.data.suggestions.shift();
+      let answers = answer.split('\t')
+      // console.log(answers)
+      //TODO:answers[0],answers[1]
+      if (answers.length > 1) {
+        console.log("Insert data")
+        connection.queryAsync(
+          `INSERT INTO stock (stock_id,stock_name) VALUE ('${answers[0]}','${answers[1]}')`)
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  } finally {
+    connection.end();
+  }
+})();
+
+
+
+
+  // let answer = response.data.suggestions
+  // .map((function(item){
+  //   return item.split("\t");
+  // }))
+  // .find(function(item){
+  //   return item[0] === stockCode;
+  // })
