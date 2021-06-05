@@ -27,13 +27,15 @@ const readFileBlue = Promise.promisify(fs.readFile);
       );
       let answer = response.data.suggestions.shift();
       let answers = answer.split('\t')
-      // console.log(answers)
+      console.log(answers)
       //TODO:answers[0],answers[1]
       if (answers.length > 1) {
         console.log("Insert data")
         connection.queryAsync(
           `INSERT INTO stock (stock_id,stock_name) VALUE ('${answers[0]}','${answers[1]}')`)
       }
+    }else{
+      console.log("資料已經存在")
     }
   } catch (err) {
     console.error(err);
@@ -41,14 +43,3 @@ const readFileBlue = Promise.promisify(fs.readFile);
     connection.end();
   }
 })();
-
-
-
-
-  // let answer = response.data.suggestions
-  // .map((function(item){
-  //   return item.split("\t");
-  // }))
-  // .find(function(item){
-  //   return item[0] === stockCode;
-  // })

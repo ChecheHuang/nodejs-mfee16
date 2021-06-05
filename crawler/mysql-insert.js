@@ -25,7 +25,7 @@ const readFileBlue = Promise.promisify(fs.readFile);
             let response = await axios.get(
                 `https://www.twse.com.tw/zh/api/codeQuery?query=${stockCode}`
             );
-
+                // console.log(response)
             let answers = response.data.suggestions
                 .map((function (item) {
                     return item.split("\t");
@@ -40,6 +40,8 @@ const readFileBlue = Promise.promisify(fs.readFile);
                 connection.queryAsync(
                     `INSERT INTO stock (stock_id,stock_name) VALUE ('${answers[0]}','${answers[1]}')`)
             }
+        }else{
+            console.log("資料已經存在")
         }
 
     } catch (err) {
