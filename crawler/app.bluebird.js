@@ -33,7 +33,7 @@ readFileBlue("stock.txt","utf-8")
   .then((response) => {
     if (response.data.stat === "OK") {
       console.log(response.data.date);
-      console.log(response.data.title);
+      console.log(response.data);
     }
   })
   .catch((err) => {
