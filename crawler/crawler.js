@@ -25,7 +25,8 @@ const readFileBlue = Promise.promisify(fs.readFile);
         console.log("stockCodeArr:", stockCodeArr)
         // console.log(stockCodeArr.length);
         for (i = 0; i < stockCodeArr.length; i++) {
-            let stock = await connection.queryAsync(`SELECT stock_id FROM stock WHERE stock_id =${stockCodeArr[i]}`);
+            if(stockCodeArr[i] !== ""){
+                let stock = await connection.queryAsync(`SELECT stock_id FROM stock WHERE stock_id =${stockCodeArr[i]}`);
             // console.log(stock.length);
             if (stock.length == 0) {
                 console.log("Start to query")
@@ -44,10 +45,11 @@ const readFileBlue = Promise.promisify(fs.readFile);
                 if (answers.length > 1) {
                     console.log("Insert data")
                     connection.queryAsync(
-                        `INSERT INTO stock (stock_id,stock_name) VALUE ('${answers[0]}','${answers[1]}')`)
+                        `INSERT INTO stock (stock_id,stock_name) VALUE ('${answers[0]}','${answers[1]}')`
+                        )
                 }
             } else {
-                console.log("資料已經存在")
+                console.log(`${stockCodeArr[i]}已經存在`)
             }
             console.log(`查詢股票成交資料 ${stockCodeArr[i]}`);
             let prices = await axios.get(
@@ -78,9 +80,12 @@ const readFileBlue = Promise.promisify(fs.readFile);
             let InsertData = await connection.queryAsync(
                 "INSERT IGNORE INTO stock_price (stock_id, date, volume, amount, open_price, high_price, low_price, close_price, delta_price, transactions) VALUES ?", [PricesData]
             )
+            console.log(`${stockCodeArr[i]}更新成功`)
+            }else{
+                console.log(`第${i+1}行股票代碼不能為空值`)
+            }
+            
         }
-
-
     } catch (err) {
         console.error(err);
     } finally {
