@@ -15,6 +15,10 @@ app.use(function(req, res, next){
     next();
 });
 
+let stockRouter = require("./routes/stock")
+app.use("/stock",stockRouter)
+
+
 app.get("/", function(req, res){
     // res.send("Hello Express");
     res.render("index");
@@ -27,21 +31,6 @@ app.get("/test", function(req, res){
     res.send("Test Express");
 })
 
-app.get("/stock",async(req, res)=>{
-    let queryResults = await connection.queryAsync("SELECT * FROM stock;")
-    
-    res.render("stock/list",{
-        stocks:queryResults
-    })
-});
-
-app.get("/stock/:stockCode",async(req, res)=>{
-    // res.send(req.params.stockCode);
-    let queryResults = await connection.queryAsync("SELECT * FROM stock_price WHERE stock_id = ? ORDER BY date",req.params.stockCode)
-    res.render("stock/detail",{
-        stockPrices: queryResults,
-    })
-});
 
 
 app.listen(3000, async() => {
