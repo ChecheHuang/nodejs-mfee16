@@ -35,9 +35,17 @@ app.get("/stock",async(req, res)=>{
     })
 });
 
+app.get("/stock/:stockCode",async(req, res)=>{
+    // res.send(req.params.stockCode);
+    let queryResults = await connection.queryAsync("SELECT * FROM stock_price WHERE stock_id = ? ORDER BY date",req.params.stockCode)
+    res.render("stock/detail",{
+        stockPrices: queryResults,
+    })
+});
 
-app.listen(3001, async() => {
+
+app.listen(3000, async() => {
     
     await connection.connectAsync();
-    console.log(`我跑起來了喔 在 port 3001`)
+    console.log(`我跑起來了喔 在 port 3000`)
 })

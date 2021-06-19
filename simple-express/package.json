@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon service.js"
+    "dev": "nodemon service.js",
+    "watch": "npx browser-sync start --config bs-config.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,5 +16,8 @@
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.14"
   }
 }

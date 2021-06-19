@@ -1,7 +1,7 @@
 extends ../_layouts/master
 
 block content 
-  h1 這是股票
+  h1 這是股票細節
 
   table 
     tr 
@@ -9,5 +9,6 @@ block content
       th 股票名字
     each stock in stocks
       tr
-        td #{stock.stock_id}
+        td 
+          a(href=`/stock/${stock.stock_id}`) #{stock.stock_id}
         td #{stock.stock_name}
