@@ -28,7 +28,7 @@ const readFileBlue = Promise.promisify(fs.readFile);
       let response = await axios.get(
         `https://www.twse.com.tw/zh/api/codeQuery?query=${stockCode}`
       );
-      // console.log(response)
+      // console.log(response.data.suggestions)
       let answers = response.data.suggestions
         .map((function (item) {
           return item.split("\t");
@@ -76,7 +76,7 @@ const readFileBlue = Promise.promisify(fs.readFile);
     let InsertData = await connection.queryAsync(
         "INSERT IGNORE INTO stock_price (stock_id, date, volume, amount, open_price, high_price, low_price, close_price, delta_price, transactions) VALUES ?", [PricesData]
     )
-    console.log(InsertData)
+    // console.log(InsertData)
    
   } catch (err) {
     console.error(err);

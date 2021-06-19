@@ -15,6 +15,7 @@ function readFilePromise() {
     });
   });
 }
+console.log(readFilePromise)
 
 readFilePromise()
   .then((stockCode) => {
@@ -29,7 +30,7 @@ readFilePromise()
     });
   })
   .then((response) => {
-    console.log(response)
+    // console.log(response)
     // if (response.data.stat === "OK") {
     //   console.log(response.data.date);
     //   console.log(response.data.title);

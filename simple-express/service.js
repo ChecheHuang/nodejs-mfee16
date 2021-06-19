@@ -1,6 +1,7 @@
 const express = require("express");
 let app = express();
 
+app.use(express.static("public"));
 
 //middleware 中間件 中介函式
 app.use(function(req, res, next){
