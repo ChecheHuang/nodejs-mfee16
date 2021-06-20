@@ -1,15 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { body, validationResult } = require("express-validator")
+// const { body, validationResult } = require("express-validator")
 
 router.get("/register",(req, res)=>{
     res.render("auth/register");
-    
-
 });
-const registerResults = [
-    body 
-];
 
 
 router.post("/register", (req, res)=>{

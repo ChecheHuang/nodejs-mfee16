@@ -8,11 +8,12 @@ router.get("/",async(req, res)=>{
      stocks:queryResults
     })
 });
-router.get("/:stockCode",async(req, res)=>{
+router.get("/:stockCode",async(req, res ,next)=>{
     let stock = await connection.queryAsync("SELECT * FROM stock WHERE stock_id=?",req.params.stockCode);
 
     if(stock.length === 0){
-        throw new Error("查無此代碼");
+        // throw new Error("查無此代碼");
+        next();
     }
     stock = stock [0]
     let count = await connection.queryAsync(
